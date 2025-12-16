@@ -5,6 +5,7 @@ import pandas as pd
 import os
 import math
 import matplotlib.pyplot as plt
+from train import get_model
 
 def predict_and_plot(model, data_folder, output_folder, plot_folder, batch_size=100):
     """
@@ -71,7 +72,8 @@ if __name__ == '__main__':
     plot_folder = "p_danger_plots/"
 
     # Load model
-    model = tf.keras.models.load_model("NN_weights/WEIGHTS.hdf5")
+    model = get_model()
+    model.load_weights("NN_weights/WEIGHTS.hdf5")
 
     # Predict and plot for each file
     predict_and_plot(model, data_folder, output_folder, plot_folder, batch_size)
