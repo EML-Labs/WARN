@@ -34,7 +34,6 @@ class ECGPreProcessor(BasePreProcessor):
             return None
         
     def process_dataset(self, dataset:list[np.ndarray])->list[np.ndarray]:
-        count = 0
         processed_data = []
         for i,data in enumerate(dataset):
             rri_peaks = self.preprocess(data)
@@ -42,7 +41,6 @@ class ECGPreProcessor(BasePreProcessor):
                 processed_data.append(rri_peaks)
             else:
                 logger.debug(f"Segment {i} skipped due to low quality.")
-                count += 1
         return processed_data
         
 
