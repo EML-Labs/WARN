@@ -1,6 +1,7 @@
 import argparse
 from Configurations.Types import TestTypes
 from Tests.MimicPerform.ECGTest import MIMICPerformECGTest
+from Tests.MimicPerform.PPGTest import MIMICPerformPPGTest
 
 class Manager:
     
@@ -15,14 +16,26 @@ class Manager:
         self.args = parser.parse_args()
 
     def run(self):
-        if self.args.test_type == TestTypes.MIMIC_PERFORM_ECG.value:
-            test = MIMICPerformECGTest(
-                segment_size=self.args.segment_size,
-                overlap=self.args.overlap,
-                quality_threshold=self.args.quality_threshold,
-                shuffle_data=self.args.shuffle_data,
-                batch_size=self.args.batch_size
-            )
-            test.run_test()
-        else:
-            raise ValueError(f"Unsupported test type: {self.args.test_type}")
+        match self.args.test_type:
+        
+            case TestTypes.MIMIC_PERFORM_ECG.value:
+                test = MIMICPerformECGTest(
+                    segment_size=self.args.segment_size,
+                    overlap=self.args.overlap,
+                    quality_threshold=self.args.quality_threshold,
+                    shuffle_data=self.args.shuffle_data,
+                    batch_size=self.args.batch_size
+                )
+                test.run_test()
+            case TestTypes.MIMIC_PERFORM_PPG.value:
+                test = MIMICPerformPPGTest(
+                    segment_size=self.args.segment_size,
+                    overlap=self.args.overlap,
+                    quality_threshold=self.args.quality_threshold,
+                    shuffle_data=self.args.shuffle_data,
+                    batch_size=self.args.batch_size
+                )
+                test.run_test()
+            
+            case _:
+                raise ValueError(f"Unsupported test type: {self.args.test_type}")

@@ -1,6 +1,5 @@
 import os
 import tensorflow as tf
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam
 from typing import Tuple
 from Utils.Loader.Base import Loader
