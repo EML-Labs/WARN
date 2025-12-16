@@ -11,7 +11,7 @@ class Manager:
         parser.add_argument('--segment_size', '-s', type=int, default=30, help="Segment size for preprocessing.")
         parser.add_argument('--overlap', '-o', type=int, default=5, help="Overlap size for preprocessing.")
         parser.add_argument('--quality_threshold', '-q', type=float, default=0.8, help="Quality threshold for preprocessing.")
-        parser.add_argument('--shuffle_data', '-f', type=bool, default=True, help="Whether to shuffle data during testing.")
+        parser.add_argument('--shuffle_data', '-f', type=lambda x: x.lower() == 'true', default=True, help="Whether to shuffle data during testing. Use 'true' or 'false'.")
         parser.add_argument('--batch_size', '-b', type=int, default=32, help="Batch size for testing.")
         self.args = parser.parse_args()
 
