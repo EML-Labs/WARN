@@ -11,9 +11,9 @@ class DataTypes(Enum):
     PPG = 'PPG'
 
 class ClassLabels(IntEnum):
-    PRE_AF = 0
-    AF = 1
-    SR = 2
+    SR = 0
+    PRE_AF = 1
+    AF = 2
 
 class TestTypes(Enum):
     MIMIC_PERFORM_ECG = 'MIMIC_ECG'
