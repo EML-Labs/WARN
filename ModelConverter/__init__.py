@@ -1,7 +1,13 @@
 import os
 import coremltools as ct
+import numpy as np
 from Utils.Loader.ModelLoader import ModelLoader
-from Configurations import ModelConfig
+from Configurations import ModelConfig,ModelMetaData
+from Utils.logger import get_logger
+
+model:ct.models.MLModel.input_description
+
+logger = get_logger()
 
 OUTPUT_DIR = os.path.join(os.getcwd(),'ConvertedWeights')
 
@@ -16,10 +22,13 @@ class ModelConverter:
         mlmodel = ct.convert(
             self.model, 
             source="tensorflow",
-             convert_to="mlprogram",
-            inputs=[ct.ImageType(shape=ModelConfig.INPUT_SHAPE)],
-            classifier_config=ct.ClassifierConfig(class_labels=ModelConfig.CLASSES_LIST)
+            convert_to="mlprogram",
+            inputs=[ct.TensorType(shape=ModelConfig.INPUT_SHAPE,dtype=np.float32)],
+            classifier_config=ct.ClassifierConfig(class_labels=ModelConfig.CLASSES_LIST),
+            minimum_deployment_target=ct.target.watchOS10,
             )
-        output_path = os.path.join(OUTPUT_DIR, "Model.mlmodel")
+        output_path = os.path.join(OUTPUT_DIR, "Model.mlpackage")
+        mlmodel = ModelMetaData(mlmodel).model
         mlmodel.save(output_path)
-        print(f"Model converted and saved to {output_path}")
+        logger.info(f"Model converted and saved to {output_path}")
+        return mlmodel
