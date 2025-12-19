@@ -2,6 +2,7 @@ import argparse
 from Configurations.Types import TestTypes
 from Tests.MimicPerform.ECGTest import MIMICPerformECGTest
 from Tests.MimicPerform.PPGTest import MIMICPerformPPGTest
+from Tests.AFPDB.ECGTest import AFPDBECGTest
 
 class Manager:
     
@@ -29,6 +30,16 @@ class Manager:
                 test.run_test()
             case TestTypes.MIMIC_PERFORM_PPG.value:
                 test = MIMICPerformPPGTest(
+                    segment_size=self.args.segment_size,
+                    overlap=self.args.overlap,
+                    quality_threshold=self.args.quality_threshold,
+                    shuffle_data=self.args.shuffle_data,
+                    batch_size=self.args.batch_size
+                )
+                test.run_test()
+
+            case TestTypes.AFPDB_ECG.value:
+                test = AFPDBECGTest(
                     segment_size=self.args.segment_size,
                     overlap=self.args.overlap,
                     quality_threshold=self.args.quality_threshold,

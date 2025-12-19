@@ -42,7 +42,7 @@ class RPGenerator(BaseRPGenerator):
         im = Image.fromarray(rp_im)
         im = im.resize((224, 224), resample=Image.BICUBIC)
         im = im.convert('L')  
-        im = np.expand_dims(np.array(im, dtype=np.uint8), axis=0)
+        im = np.expand_dims(np.array(im, dtype=np.uint8), axis=-1)
         return im
     
 
